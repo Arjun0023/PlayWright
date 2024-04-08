@@ -21,10 +21,10 @@ def fill_form(page, data):
 
 # Main function to run the script
 def main():
-    # Initialize Playwright
+    # Initialize Playwright with WebKit (Brave uses WebKit)
     with sync_playwright() as p:
-        # Launch browser
-        browser = p.chromium.launch()
+        # Launch Brave browser
+        browser = p.webkit.launch()
         
         # Create a new page
         page = browser.new_page()
