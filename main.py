@@ -1,13 +1,49 @@
 from playwright.sync_api import sync_playwright
+import json
 
-with sync_playwright() as p:
-    # Make sure to run headed.
-    browser = p.chromium.launch(headless=False)
+# JSON data for the form
+form_data = {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "message": "This is a test message."
+}
 
-    # Setup context however you like.
-    context = browser.new_context() # Pass any options
-    context.route('**/*', lambda route: route.continue_())
+# Function to fill the form
+def fill_form(page, data):
+    # Fill name field
+    page.fill('input[name="name"]', data["name"])
+    
+    # Fill email field
+    page.fill('input[name="email"]', data["email"])
+    
+    # Fill message field
+    page.fill('textarea[name="message"]', data["message"])
 
-    # Pause the page, and start recording manually.
-    page = context.new_page()
-    page.pause()
+# Main function to run the script
+def main():
+    # Initialize Playwright
+    with sync_playwright() as p:
+        # Launch browser
+        browser = p.chromium.launch()
+        
+        # Create a new page
+        page = browser.new_page()
+        
+        # Navigate to the form page
+        page.goto('https://example.com/form')
+        
+        # Wait for the form elements to be visible
+        page.wait_for_selector('input[name="name"]')
+        
+        # Fill the form with data
+        fill_form(page, form_data)
+        
+        # Wait for a moment to see the filled form
+        page.wait_for_timeout(2000)
+        
+        # Close the browser
+        browser.close()
+
+# Execute the main function
+if __name__ == "__main__":
+    main()
