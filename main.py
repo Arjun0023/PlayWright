@@ -1,35 +1,28 @@
 import json
 from playwright.sync_api import sync_playwright
 
+with open('data.json') as f:
+    data = json.load(f)
+
 def fill_form(page, data):
-    for field, value in data.items():
-        page.fill(f"input[name='{field}']", value)
+    for key, value in data.items():
+        field = page.locator(f'input[name="{key}"]')
+        field.fill(value)
 
 def main():
-    # Load data from JSON file
-    with open('form_data.json') as json_file:
-        form_data = json.load(json_file)
-
-    # Launch browser
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False)
         page = browser.new_page()
-
-        # Navigate to the website
-        page.goto('https://docs.google.com/forms/d/e/1FAIpQLScAFKI1fZ1cXhBmSp2HM93Jvuc8Jvrxh5iSbkKhtwKN-OHoTQ/viewform')
-
-        # Fill the form
-        fill_form(page, form_data)
-
-        # You may need to adjust this according to your website's submit button selector
-        page.click('button[type="submit"]')
-
-        # Wait for navigation, you may need to adjust the URL for successful navigation
-        page.wait_for_navigation()
-
-        # Optional: Take a screenshot of the filled form
-        page.screenshot(path='filled_form.png')
-
+        page.goto("https://crm.zoho.in/crm/org60028443671/tab/Leads/custom-view/669791000000029342/list")
+        create_lead_button = page.locator("//button[text()='Create Lead']")
+        create_lead_button.click()
+        fill_form(page, data)
+        
+        # Submit the form
+        submit_button = page.locator("//button[text()='Submit']")
+        submit_button.click()
+        
+        # Close the browser
         browser.close()
 
 if __name__ == "__main__":
