@@ -1,7 +1,9 @@
 {
-    "name": "John Doe",
-    "email": "john.doe@example.com",
-    "phone": "1234567890",
-    "company": "ABC Inc",
-    "message": "This is a test message."
-  }
+  "email": "arjunp0023@gmail.com",
+  "password": "Arjun@123",
+  "salutation": "Mr.",
+  "first_name": "Arjun",
+  "last_name": "Prakash3",
+  "company": "c2crm",
+  "designation": "Some Designation"
+}
