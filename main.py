@@ -1,101 +1,36 @@
+import json
 from playwright.sync_api import sync_playwright
-import json
 
-# JSON data for the form
-form_data = {
-    "name": "John Doe",
-    "email": "john@example.com",
-    "message": "This is a test message."
-}
-
-# Function to fill the form
 def fill_form(page, data):
-    # Fill name field
-    page.fill('input[name="name"]', data["name"])
-    
-    # Fill email field
-    page.fill('input[name="email"]', data["email"])
-    from playwright.sync_api import sync_playwright
-import json
+    for field, value in data.items():
+        page.fill(f"input[name='{field}']", value)
 
-# JSON data for the form
-form_data = {
-    "name": "John Doe",
-    "email": "john@example.com",
-    "message": "This is a test message."
-}
-
-# Function to fill the form
-def fill_form(page, data):
-    # Fill name field
-    page.fill('input[name="name"]', data["name"])
-    
-    # Fill email field
-    page.fill('input[name="email"]', data["email"])
-    
-    # Fill message field
-    page.fill('textarea[name="message"]', data["message"])
-
-# Main function to run the script
 def main():
-    # Initialize Playwright with WebKit (Brave uses WebKit)
+    # Load data from JSON file
+    with open('form_data.json') as json_file:
+        form_data = json.load(json_file)
+
+    # Launch browser
     with sync_playwright() as p:
-        # Launch Brave browser
-        browser = p.webkit.launch()
-        
-        # Create a new page
+        browser = p.chromium.launch(headless=False)
         page = browser.new_page()
-        
-        try:
-            # Navigate to the form page
-            page.goto('https://example.com/form')
-            
-            # Wait for the form elements to be visible
-            page.wait_for_selector('input[name="name"]', timeout=10000)
-            
-            # Fill the form with data
-            fill_form(page, form_data)
-            
-            # Wait for a moment to see the filled form
-            page.wait_for_timeout(2000)
-        except Exception as e:
-            print("An error occurred:", e)
-        finally:
-            # Close the browser
-            browser.close()
 
-# Execute the main function
-if __name__ == "__main__":
-    main()
+        # Navigate to the website
+        page.goto('https://docs.google.com/forms/d/e/1FAIpQLScAFKI1fZ1cXhBmSp2HM93Jvuc8Jvrxh5iSbkKhtwKN-OHoTQ/viewform')
 
-    # Fill message field
-    page.fill('textarea[name="message"]', data["message"])
-
-# Main function to run the script
-def main():
-    # Initialize Playwright with WebKit (Brave uses WebKit)
-    with sync_playwright() as p:
-        # Launch Brave browser
-        browser = p.webkit.launch()
-        
-        # Create a new page
-        page = browser.new_page()
-        
-        # Navigate to the form page
-        page.goto('https://example.com/form')
-        
-        # Wait for the form elements to be visible
-        page.wait_for_selector('input[name="name"]')
-        
-        # Fill the form with data
+        # Fill the form
         fill_form(page, form_data)
-        
-        # Wait for a moment to see the filled form
-        page.wait_for_timeout(2000)
-        
-        # Close the browser
+
+        # You may need to adjust this according to your website's submit button selector
+        page.click('button[type="submit"]')
+
+        # Wait for navigation, you may need to adjust the URL for successful navigation
+        page.wait_for_navigation()
+
+        # Optional: Take a screenshot of the filled form
+        page.screenshot(path='filled_form.png')
+
         browser.close()
 
-# Execute the main function
 if __name__ == "__main__":
     main()
