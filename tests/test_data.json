@@ -1,0 +1,27 @@
+{
+    "actions": [
+      { "action": "goto", "url": "https://www.google.com/" },
+      { "action": "click", "selector": "label:has-text('Search')" },
+      { "action": "fill", "selector": "label:has-text('Search')", "text": "zoho crm login" },
+      { "action": "click", "selector": "a:has-text('Sign in to Zoho CRM Zoho')" },
+      { "action": "click", "selector": "a:has-text('SIGN IN')" },
+      { "action": "click", "selector": "input[placeholder='Email address or mobile number']" },
+      { "action": "fill", "selector": "input[placeholder='Email address or mobile number']", "text": "arjunpawar0023@gmail.com" },
+      { "action": "click", "selector": "button:has-text('Next')" },
+      { "action": "fill", "selector": "input[placeholder='Enter password']", "text": "!@#123letsgoo" },
+      { "action": "click", "selector": "button:has-text('Sign in')" },
+      { "action": "click", "selector": "button:has-text('Skip for now')" },
+      { "action": "click", "selector": "a:has-text('Leads')" },
+      { "action": "click", "selector": "button:has-text('Create Lead')" },
+      { "action": "fill", "selector": "#Crm_Leads_DESIGNATION_LInput", "text": "manager" },
+      { "action": "fill", "selector": "#Crm_Leads_PHONE_LInput", "text": "9822" },
+      { "action": "fill", "selector": "#Crm_Leads_COMPANY #inputId", "text": "abc company" },
+      { "action": "fill", "selector": "#Crm_Leads_LASTNAME_LInput", "text": "last" },
+      { "action": "click", "selector": "button:has-text('Save')" },
+      { "action": "click", "selector": "a:has-text('Accounts')" },
+      { "action": "click", "selector": "button:has-text('Create Account')" },
+      { "action": "fill", "selector": "#Crm_Accounts_ACCOUNTNAME_LInput", "text": "new account" },
+      { "action": "click", "selector": "button:has-text('Save')" }
+    ]
+  }
+  
