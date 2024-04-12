@@ -22,8 +22,8 @@ const fs = require('fs').promises;
   await page.getByRole('button', { name: 'Skip for now' }).click();
   await page.getByRole('link', { name: 'Leads' }).click();
   await page.getByRole('button', { name: 'Create Lead' }).click();
-  await page.locator('#Crm_Leads_COMPANY #inputId').click();
-  await page.locator('#Crm_Leads_COMPANY #inputId').fill(companyName);
+  //await page.locator('#Crm_Leads_COMPANY #inputId').click();
+  await page.locator('#Crm_Leads_COMPANY #inputId').fill(company);
   await page.locator('#Crm_Leads_LASTNAME_LInput').fill(lastName);
   await page.getByRole('button', { name: 'Save and New' }).click();
 
