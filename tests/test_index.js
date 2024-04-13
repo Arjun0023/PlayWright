@@ -3,8 +3,9 @@ const fs = require('fs').promises;
 
 (async () => {
   const data = await fs.readFile('data.json', 'utf-8');
+  console.log(JSON.parse(data))
   const { email, password, companyName, lastName } = JSON.parse(data);
-
+  console.log( email, password, companyName, lastName )
   const browser = await chromium.launch({
     headless: false
   });
@@ -23,11 +24,11 @@ const fs = require('fs').promises;
   await page.getByRole('link', { name: 'Leads' }).click();
   await page.getByRole('button', { name: 'Create Lead' }).click();
   //await page.locator('#Crm_Leads_COMPANY #inputId').click();
-  await page.locator('#Crm_Leads_COMPANY #inputId').fill(company);
+  await page.locator('#Crm_Leads_COMPANY #inputId').fill(companyName);
   await page.locator('#Crm_Leads_LASTNAME_LInput').fill(lastName);
   await page.getByRole('button', { name: 'Save and New' }).click();
 
   // ---------------------
-  await context.close();
-  await browser.close();
+  //await context.close();
+  //await browser.close();
 })();
